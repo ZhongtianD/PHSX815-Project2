@@ -3,9 +3,9 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-# import our Gaussian2 class from Random.py file
+# import our Gaussian class from Random.py file
 sys.path.append(".")
-from Random import Gaussian2
+from Random import Gaussian
 
 # main function for our analysis code
 if __name__ == "__main__":
@@ -95,8 +95,7 @@ if __name__ == "__main__":
     LogLikeRatio0 = []
     LogLikeRatio1 = []
     #initialise Gaussian models
-    G_0 = Gaussian2(sigma = sigma_0, mu0 = mu0_0 ,sigma0 = sigma0_0)
-    G_1 = Gaussian2(sigma = sigma_1, mu0 = mu0_1 ,sigma0 = sigma0_1)
+    
 
     LLR_min = 1e8
     LLR_max = -1e8
@@ -104,6 +103,17 @@ if __name__ == "__main__":
     #loading files    
     file0 = np.load(InputFile0)
     Nsample = file0.shape[1]
+    
+    
+    mean = np.mean(file0)
+    std = np.std(file0)
+    G_0 = Gaussian(mu=mean,sigma=std)
+    
+    file1 = np.load(InputFile1)
+        
+    mean = np.mean(file1)
+    std = np.std(file1)
+    G_1 = Gaussian(mu=mean,sigma=std)
         
     for i in range(file0.shape[0]):
         Nsum = 0
@@ -121,23 +131,23 @@ if __name__ == "__main__":
               LLR_max = LLR
         LogLikeRatio0.append(LLR)
 
-    if haveH1:
-        file1 = np.load(InputFile1)
+    
+        
             
-        for i in range(file1.shape[0]):
-            LLR = 0
-            for v in file1[i]:
-                #loglikelihood ratio
-                LLR += G_1.loglike(v)-G_0.loglike(v)
+    for i in range(file1.shape[0]):
+        LLR = 0
+        for v in file1[i]:
+        #loglikelihood ratio
+        LLR += G_1.loglike(v)-G_0.loglike(v)
 
                 
                     
 
-            if LLR < LLR_min:
-                LLR_min = LLR
-            if LLR > LLR_max:
-                LLR_max = LLR
-            LogLikeRatio1.append(LLR)
+        if LLR < LLR_min:
+              LLR_min = LLR
+        if LLR > LLR_max:
+              LLR_max = LLR
+        LogLikeRatio1.append(LLR)
 
     title = str(Nsample) +  " samples / experiment"
     #sort sequence to find $\\lambda_\\alpha$ and beta
