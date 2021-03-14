@@ -104,6 +104,7 @@ if __name__ == "__main__":
     file0 = np.load(InputFile0)
     Nsample = file0.shape[1]
     
+    print(alpha)
     
     mean = np.mean(file0)
     std = np.std(file0)
@@ -163,7 +164,7 @@ if __name__ == "__main__":
     plt.hist(LogLikeRatio0, 50, density=True, facecolor='b', alpha=0.5, label="assuming $\\mathbb{H}_0$")
     plt.hist(LogLikeRatio1, 50, density=True, facecolor='g', alpha=0.5, label="assuming $\\mathbb{H}_1$")
     plt.axvline(alpha, color='r', linewidth=1, label='$\\lambda_\\alpha$')
-    plt.plot([], [], ' ', label="$\\alpha = $+str(alpha)")
+    plt.plot([], [], ' ', label="$\\alpha = $ + str(alpha)")
     plt.plot([], [], ' ', label="$\\beta = $"+str(beta) ) 
     plt.legend()
 
