@@ -173,6 +173,6 @@ if __name__ == "__main__":
 
     plt.grid(True)
 
-    plt.savefig('Gaussian with varying mean.png')
+    plt.savefig('Gaussian_with_varying_mean.png')
     plt.show()
     
