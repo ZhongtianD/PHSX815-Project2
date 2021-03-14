@@ -59,7 +59,7 @@ if __name__ == "__main__":
         p = sys.argv.index('-sigma0')
         ptemp = float(sys.argv[p+1])
         if ptemp > 0 :
-            sigma = ptemp
+            sigma0 = ptemp
     if '-Nsample' in sys.argv:
         p = sys.argv.index('-Nsample')
         Ns = int(sys.argv[p+1])
