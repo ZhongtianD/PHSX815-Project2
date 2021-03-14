@@ -196,14 +196,13 @@ if __name__ == "__main__":
     sigma_N0 = 1/np.sqrt(1/sigma0_0**2+Nsample/sigma_0**2)
     sigma_N1 = 1/np.sqrt(1/sigma0_1**2+Nsample/sigma_1**2)
     
-    bins = np.linspace(-4, 4, num=60)
-    plt.plot(bins, 1/(sigma_N0 * np.sqrt(2 * np.pi)) *np.exp( - (bins - mu_N0)**2 / (2 * sigma_N0**2) ),linewidth=2, color='b', label="assuming $\\mathbb{H}_0$")
-    plt.plot(bins, 1/(sigma_N1 * np.sqrt(2 * np.pi)) *np.exp( - (bins - mu_N1)**2 / (2 * sigma_N1**2) ),linewidth=2, color='g', label="assuming $\\mathbb{H}_1$")
+    bins = np.linspace(-1, 1, num=60)
+    plt.plot(bins, 1/(sigma_N0 * np.sqrt(2 * np.pi)) *np.exp( - (bins - mu_N0)**2 / (2 * sigma_N0**2) ),linewidth=2, color='b', label="assuming prior $\\mathbb{H}_0$")
+    plt.plot(bins, 1/(sigma_N1 * np.sqrt(2 * np.pi)) *np.exp( - (bins - mu_N1)**2 / (2 * sigma_N1**2) ),linewidth=2, color='g', label="assuming prior $\\mathbb{H}_1$")
     plt.legend()
-    plt.title('Posterior distribution of $\\mu$ of'+str(Nsample)+'samples of different prior when $\\mathbb{H}_0$ is true' )
+    plt.title('Posterior distribution of $\\mu$ of '+str(Nsample)+'samples of different prior when $\\mathbb{H}_0$ is true' )
     plt.savefig('Posteriors_0.png')
     plt.show()
     
-    mu_sample1 = np.mean(file1[I])
     
     
