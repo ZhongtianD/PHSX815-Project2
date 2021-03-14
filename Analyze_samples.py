@@ -31,6 +31,9 @@ if __name__ == "__main__":
     # default alpha value
     alpha = 0.05
 
+    #index of an experiment for the posterior
+    I = 1
+    
     haveH0 = False
     haveH1 = False
 
@@ -67,6 +70,11 @@ if __name__ == "__main__":
         ptemp = float(sys.argv[p+1])
         if (ptemp > 0 and ptemp<1) :
             alpha = ptemp
+    if '-I' in sys.argv:
+        p = sys.argv.index('-I')
+        ptemp = int(sys.argv[p+1])
+        if (ptemp >= 0 ) :
+            I = ptemp
     if '-input0' in sys.argv:
         p = sys.argv.index('-input0')
         InputFile0 = sys.argv[p+1]
@@ -88,6 +96,7 @@ if __name__ == "__main__":
         print ("   -sigma0_0 [number]   sigma0 for H0 ( and H1 if there is no sigma1 input)")
         print ("   -sigma0_1 [number]   sigma0 for H1")
         print ("   -alpha [number]   alpha value for H0")
+        print ("   -I [integer]   index of an experiment for the posterior")
         print
         sys.exit(1)
     
@@ -175,4 +184,25 @@ if __name__ == "__main__":
 
     plt.savefig('Gaussian_with_varying_mean.png')
     plt.show()
+    
+    plt.clf()
+    
+    mu_sample0 = np.mean(file0[I])
+    
+    
+    mu_N0 = (sigma_0**2*mu0_0 + Nsample*sigma0_0**2*mu_sample0)/(Nsample*sigma0_0**2+sigma_0**2)
+    mu_N1 = (sigma_1**2*mu0_1 + Nsample*sigma0_1**2*mu_sample0)/(Nsample*sigma0_1**2+sigma_1**2)
+    
+    sigma_N0 = 1/np.sqrt(1/sigma0_0**2+Nsample/sigma_0**2)
+    sigma_N1 = 1/np.sqrt(1/sigma0_1**2+Nsample/sigma_1**2)
+    
+    plt.plot(bins, 1/(sigma_N0 * np.sqrt(2 * np.pi)) *np.exp( - (bins - mu_N0)**2 / (2 * sigma_N0**2) ),linewidth=2, color='b', label="assuming $\\mathbb{H}_0$")
+    plt.plot(bins, 1/(sigma_N1 * np.sqrt(2 * np.pi)) *np.exp( - (bins - mu_N1)**2 / (2 * sigma_N1**2) ),linewidth=2, color='g', label="assuming $\\mathbb{H}_1$")
+    plt.legend()
+    plt.title('Posterior distribution of $\\mu$ of'+str(Nsample)+'samples of different prior when $\\mathbb{H}_0$ is true' )
+    plt.savefig('Posteriors_0.png')
+    plt.show()
+    
+    mu_sample1 = np.mean(file1[I])
+    
     
