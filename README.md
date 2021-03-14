@@ -15,4 +15,7 @@ To analyze simulated samples from two different hypothesis of Gaussian, use
 python Analyze_samples.py -mu0_0 0 -mu0_1 2 -sigma0 1 -sigma0_0 0.5 -alpha 0.05 -input0 sample0.npy -input1 sample1.npy
 
 It will generate a picture of loglikelihood ratio plot comparing the two hypothesis
-![alt text](https://github.com/ZhongtianD/PHSX815-Project2/blob/main/Gaussian%20with%20varying%20mean.png?raw=true)
+![alt text](https://github.com/ZhongtianD/PHSX815-Project2/blob/main/Gaussian_with_varying_mean.png?raw=true)
+
+And a posterior of the mean when the priors are given by the two hypothesises, whith samples given by hypothesis0.
+![alt text](https://github.com/ZhongtianD/PHSX815-Project2/blob/main/Posteriors_0.png?raw=true)
