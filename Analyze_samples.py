@@ -137,8 +137,8 @@ if __name__ == "__main__":
     for i in range(file1.shape[0]):
         LLR = 0
         for v in file1[i]:
-        #loglikelihood ratio
-        LLR += G_1.loglike(v)-G_0.loglike(v)
+            #loglikelihood ratio
+            LLR += G_1.loglike(v)-G_0.loglike(v)
 
                 
                     
