@@ -113,13 +113,14 @@ if __name__ == "__main__":
     file0 = np.load(InputFile0)
     Nsample = file0.shape[1]
     
-    
+    #estimate pdf for H0
     mean = np.mean(file0)
     std = np.std(file0)
     G_0 = Gaussian(mu=mean,sigma=std)
     
     file1 = np.load(InputFile1)
         
+    #estimate pdf for H1
     mean = np.mean(file1)
     std = np.std(file1)
     G_1 = Gaussian(mu=mean,sigma=std)
@@ -187,13 +188,15 @@ if __name__ == "__main__":
     
     plt.clf()
     
+    
+    #calculate the posterior distribution of a sample from H0
     mu_sample0 = np.mean(file0[I])
     
-    
+    #posterior given prior 0
     mu_N0 = (sigma_0**2*mu0_0 + Nsample*sigma0_0**2*mu_sample0)/(Nsample*sigma0_0**2+sigma_0**2)
-    mu_N1 = (sigma_1**2*mu0_1 + Nsample*sigma0_1**2*mu_sample0)/(Nsample*sigma0_1**2+sigma_1**2)
-    
     sigma_N0 = 1/np.sqrt(1/sigma0_0**2+Nsample/sigma_0**2)
+    #posterior given prior 1
+    mu_N1 = (sigma_1**2*mu0_1 + Nsample*sigma0_1**2*mu_sample0)/(Nsample*sigma0_1**2+sigma_1**2)
     sigma_N1 = 1/np.sqrt(1/sigma0_1**2+Nsample/sigma_1**2)
     
     bins = np.linspace(-1, 1, num=60)
