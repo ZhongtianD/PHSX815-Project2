@@ -90,7 +90,7 @@ class Gaussian2:
         self.sigma = sigma
         self.sigma0 = sigma0
         
-        self.Gmu = Gaussian(seed=seed+1,mu = mu0, sigma = sigma0)
+        self.Gmu = Gaussian(mu = mu0, sigma = sigma0)
     
     
     def loglike(self, sample):

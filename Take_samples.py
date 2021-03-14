@@ -84,6 +84,6 @@ if __name__ == "__main__":
         for e in range(Nexp):
             x = np.random.rand()
             #Generate samples with a random starting point
-            S[e] = G.Gaussian_sample([mu0, mu0+x*sigma ],Nsample)
+            S[e] = G.Sample([mu0, mu0+x*sigma ],Nsample)
         np.save(OutputFileName, S)
    
