@@ -1,6 +1,7 @@
 
 
 import numpy as np
+import math
 
 from numpy.random import RandomState, SeedSequence, MT19937
 
@@ -166,3 +167,78 @@ class Gaussian2:
             samples[:,i] = x_0.copy()
 
         return samples[1,:]
+
+    
+class Gamma:
+    
+    def __init__(self, seed = 1010, a = 2, b = 2):
+        self.random = RandomState(MT19937(SeedSequence(int(seed))))
+        
+        self.a = a
+        self.b = b
+    
+    
+    def loglike(self, sample):
+         # log likelihood of a specific sample 
+        return np.log(self.pdf(sample))
+    
+    def pdf(self, sample):
+        #probability density of a sample
+        s = sample
+        a = self.a
+        b = self.b
+        
+        return (b**a)*(s**(a-1))*np.exp(-1*b*s)/math.gamma(a)
+
+    # function returns a random number from the Gaussian distr. using slice sampling method
+    def Gamma_sample(self, init, Nsample):
+        samples = np.zeros(Nsample)
+        
+        pdf = self.pdf
+        random = self.random
+       
+
+        # initialize
+        x_0 = init
+        
+        
+        #generate a sequence of Nsample samples.
+        for i in range(Nsample):
+            p_0 = pdf(x_0)
+            
+            
+            #pick a random place on the vertical line
+            p = p_0*random.rand()
+            
+            # set a  horizontal slice
+            r = random.rand()
+            x_1 = x_0 - r
+            x_2 = x_0+(1-r)
+            
+            #increase length of the slice
+            p_1 = pdf(x_1)
+            while p_1 > p:
+                x_1 = x_1 - 1
+                p_1 = pdf(x_1)
+            p_2 = pdf(x_2)
+            while p_2 > p:
+                x_2 = x_2 + 1
+                p_2 = pdf(x_2)
+            
+            #try a sample
+            while True:
+                x = random.rand()*(x_2-x_1)+x_1
+                p_0 = pdf(x)
+            # if x is actually in the slice, take it, else adjust the length of the slice and find a new one.
+                if p_0 > p:
+                    x_0 = x
+                    break
+                elif x>x_0:
+                    x_2 = x
+                elif x<x_0:
+                    x_1 = x
+
+
+            samples[i] = x_0
+
+        return samples
